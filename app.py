@@ -14,14 +14,14 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 
 st.set_page_config(
-    page_title="TalentIntel AI — ATS Intelligence & Talent Scorer",
+    page_title="TalentIntel AI",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # ==========================================
-# 100% HIGH-CONTRAST SLATE-NAVY UI SYSTEM
+# 100% BULLETPROOF HIGH-CONTRAST THEME
 # ==========================================
 st.markdown("""
 <style>
@@ -31,13 +31,13 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
     
-    /* Main Canvas Background */
-    .stApp {
+    /* Global App Canvas */
+    .stApp, [data-testid="stHeader"] {
         background-color: #0B0F19 !important;
         color: #F8FAFC !important;
     }
 
-    /* Fixed Dark Sidebar */
+    /* Sidebar Fix */
     [data-testid="stSidebar"] {
         background-color: #111827 !important;
         border-right: 1px solid #1F2937 !important;
@@ -46,45 +46,73 @@ st.markdown("""
         color: #F8FAFC !important;
     }
 
-    /* All Inputs, TextAreas & Selectboxes - 100% Crisp Visible */
-    .stTextInput input, .stTextArea textarea, [data-baseweb="select"] div {
+    /* Fix API Key Input Box & Eye Icon */
+    [data-testid="stSidebar"] [data-baseweb="input"], 
+    [data-testid="stSidebar"] [data-baseweb="input"] input,
+    [data-testid="stSidebar"] [data-baseweb="base-input"] {
         background-color: #1E293B !important;
         color: #FFFFFF !important;
         border: 1px solid #3B82F6 !important;
-        font-size: 14px !important;
         border-radius: 8px !important;
     }
-    .stTextArea textarea {
-        color: #F1F5F9 !important;
-        line-height: 1.5 !important;
+    [data-testid="stSidebar"] [data-baseweb="input"] button {
+        background-color: #1E293B !important;
+        color: #94A3B8 !important;
+    }
+
+    /* All Main Form Inputs, Dropdowns & TextAreas */
+    [data-baseweb="input"], [data-baseweb="textarea"], [data-baseweb="select"] > div {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+    }
+    .stTextArea textarea, .stTextInput input {
+        color: #FFFFFF !important;
+        background-color: #1E293B !important;
+    }
+
+    /* File Uploader Box Fix (No White Invisible Glitch) */
+    [data-testid="stFileUploader"] section {
+        background-color: #1E293B !important;
+        border: 1px dashed #3B82F6 !important;
+        border-radius: 10px !important;
+        color: #FFFFFF !important;
+    }
+    [data-testid="stFileUploader"] section * {
+        color: #CBD5E1 !important;
+    }
+    [data-testid="stFileUploader"] button {
+        background: #2563EB !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        font-weight: 700 !important;
+        border-radius: 6px !important;
     }
 
     /* Top Hero Header */
     .hero-banner {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(17, 24, 39, 0.95) 100%);
-        border: 1px solid #374151;
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        border: 1px solid #334155;
         border-radius: 12px;
-        padding: 22px;
+        padding: 20px;
         margin-bottom: 20px;
-        box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.6);
         text-align: center;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     }
     .hero-title {
         font-size: 30px;
         font-weight: 800;
-        background: linear-gradient(90deg, #38BDF8 0%, #818CF8 50%, #C084FC 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 6px;
-        letter-spacing: 0.5px;
+        color: #38BDF8;
+        margin-bottom: 4px;
     }
     .hero-desc {
         color: #94A3B8;
-        font-size: 14px;
+        font-size: 13.5px;
         margin: 0;
     }
 
-    /* Metric Cards */
+    /* Top 4 Stat Boxes */
     .stat-box {
         background: #1E293B;
         border: 1px solid #334155;
@@ -106,22 +134,27 @@ st.markdown("""
         font-weight: 600;
     }
 
-    /* Tabs Styling - Solid, Crisp & Visible */
+    /* Tabs Styling - 100% Sharp & Readable */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
+        gap: 8px;
         background: #111827;
         padding: 6px;
         border-radius: 10px;
         border: 1px solid #374151;
+        margin-bottom: 16px;
     }
     .stTabs [data-baseweb="tab"] {
-        background: #1F2937 !important;
-        border: 1px solid #374151 !important;
+        background: #1E293B !important;
+        border: 1px solid #334155 !important;
         border-radius: 8px !important;
-        padding: 10px 22px !important;
+        padding: 10px 20px !important;
         font-weight: 700 !important;
-        font-size: 14px !important;
-        color: #E2E8F0 !important;
+        font-size: 13.5px !important;
+        color: #CBD5E1 !important;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        color: #FFFFFF !important;
+        border-color: #38BDF8 !important;
     }
     .stTabs [aria-selected="true"] {
         background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%) !important;
@@ -130,7 +163,7 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4) !important;
     }
 
-    /* Cards & Badges */
+    /* Cards & Tier Badges */
     .section-card {
         background: #1E293B;
         border: 1px solid #334155;
@@ -421,7 +454,7 @@ def generate_dossier_pdf(candidate_name, role, result):
     buffer.seek(0)
     return buffer
 
-# Session States
+# Session States for 2-Screen Flow
 if "evaluation_result" not in st.session_state:
     st.session_state.evaluation_result = None
 if "current_file_name" not in st.session_state:
@@ -429,7 +462,7 @@ if "current_file_name" not in st.session_state:
 if "current_role" not in st.session_state:
     st.session_state.current_role = None
 
-# Hero Header with New Clean Branding
+# Hero Title Header
 st.markdown("""
 <div class="hero-banner">
     <div class="hero-title">⚡ TalentIntel AI</div>
@@ -437,7 +470,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Top 4 Real-Time Live Metrics
+# Top 4 Live Metrics Counters
 eval_df_quick = fetch_evaluations_df()
 q_count = len(eval_df_quick)
 q_avg = f"{round(eval_df_quick['match_score'].mean(), 1)}%" if q_count > 0 else "0%"
@@ -455,12 +488,12 @@ with s4:
 
 st.write("")
 
-# Sidebar
+# Sidebar Engine Config
 with st.sidebar:
     st.markdown("### ⚙️ Engine Settings")
     gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="Paste AIzaSy key...")
     st.markdown("""
-    <div style="background: rgba(37, 99, 235, 0.15); border: 1px solid #3B82F6; padding: 8px; border-radius: 8px; font-size: 12px; color: #93C5FD; text-align: center; margin-top: 4px;">
+    <div style="background: rgba(37, 99, 235, 0.2); border: 1px solid #3B82F6; padding: 8px; border-radius: 8px; font-size: 12px; color: #93C5FD; text-align: center; margin-top: 6px;">
         ⚡ <b>Active:</b> Gemini 3.6 Flash | SQLite3
     </div>
     """, unsafe_allow_html=True)
@@ -570,7 +603,7 @@ with tab1:
         with col1:
             st.markdown("### 📄 1. Upload Resume Document")
             single_file = st.file_uploader(
-                "Upload Resume (PDF / DOCX)",
+                "Upload Candidate Document (PDF / DOCX)",
                 type=["pdf", "docx"],
                 key="c_upload"
             )
