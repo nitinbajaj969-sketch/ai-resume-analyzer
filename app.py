@@ -20,11 +20,43 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Banner & Stat Box Styling (Matching Screenshot)
+# Custom Banner, Upload Button & Input Polish
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
     
+    /* Hide "Press Enter to apply" popup instruction */
+    [data-testid="InputInstructions"] {
+        display: none !important;
+    }
+
+    /* Clean Dark File Uploader Box */
+    [data-testid="stFileUploader"] section {
+        background-color: #1E293B !important;
+        border: 2px dashed #38BDF8 !important;
+        border-radius: 12px !important;
+        padding: 18px !important;
+    }
+    [data-testid="stFileUploader"] section * {
+        color: #E2E8F0 !important;
+    }
+    
+    /* High-Contrast Visible Upload/Browse Button */
+    [data-testid="stFileUploader"] section button {
+        background-color: #0284C7 !important;
+        color: #FFFFFF !important;
+        border: 1px solid #38BDF8 !important;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+        padding: 8px 18px !important;
+        border-radius: 6px !important;
+    }
+    [data-testid="stFileUploader"] section button:hover {
+        background-color: #0369A1 !important;
+        color: #FFFFFF !important;
+    }
+
+    /* Top Hero Container */
     .hero-container {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background: #111A2E;
@@ -48,6 +80,7 @@ st.markdown("""
         margin: 0;
     }
     
+    /* Top 4 Stat Metrics */
     .metric-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -335,7 +368,7 @@ if "current_file_name" not in st.session_state:
 if "current_role" not in st.session_state:
     st.session_state.current_role = None
 
-# TOP HERO BANNER (MATCHING IMAGE)
+# TOP HERO BANNER
 st.markdown("""
 <div class="hero-container">
     <div class="hero-title">⚡ AI Resume Analyzer + ATS Intelligence</div>
@@ -343,7 +376,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# TOP 4 STAT CARDS (MATCHING IMAGE)
+# TOP 4 STAT CARDS
 eval_df_quick = fetch_evaluations_df()
 q_count = len(eval_df_quick)
 q_avg = f"{round(eval_df_quick['match_score'].mean(), 1)}%" if q_count > 0 else "0%"
@@ -373,7 +406,7 @@ st.markdown(f"""
 # Sidebar
 with st.sidebar:
     st.header("⚙️ Engine Settings")
-    gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="AIzaSy...")
+    gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="Paste Gemini API Key...")
     st.info("Core Engine: **Gemini 3.6 Flash**\nDatabase: **SQLite3**")
     
     st.divider()
