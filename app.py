@@ -21,6 +21,146 @@ st.set_page_config(
 )
 
 # ==========================================
+# SLATE-NAVY ENTERPRISE CUSTOM THEME
+# ==========================================
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    
+    * {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    
+    .stApp {
+        background: #0F172A !important;
+        color: #F8FAFC !important;
+    }
+
+    [data-testid="stSidebar"] {
+        background-color: #1E293B !important;
+        border-right: 1px solid #334155 !important;
+    }
+    [data-testid="stSidebar"] * {
+        color: #F8FAFC !important;
+    }
+    [data-testid="stSidebar"] .stTextInput input {
+        background-color: #0F172A !important;
+        color: #38BDF8 !important;
+        border: 1px solid #475569 !important;
+    }
+
+    .hero-banner {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #38BDF8;
+        margin-bottom: 4px;
+        letter-spacing: 0.5px;
+    }
+    
+    .hero-desc {
+        color: #94A3B8;
+        font-size: 13px;
+        margin: 0;
+    }
+
+    .stat-box {
+        background: #1E293B;
+        border: 1px solid #334155;
+        border-radius: 10px;
+        padding: 12px 16px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    .stat-number {
+        font-size: 22px;
+        font-weight: 800;
+        color: #38BDF8;
+    }
+    .stat-label {
+        font-size: 11px;
+        color: #94A3B8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+    
+    .section-box {
+        background: #1E293B;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 16px;
+    }
+    .section-header {
+        font-size: 16px;
+        font-weight: 700;
+        color: #F8FAFC !important;
+        margin-bottom: 12px;
+    }
+
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background: #0F172A;
+        padding: 6px;
+        border-radius: 10px;
+        border: 1px solid #334155;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background: #1E293B !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        font-weight: 600 !important;
+        color: #94A3B8 !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%) !important;
+        color: #FFFFFF !important;
+        border: 1px solid #38BDF8 !important;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4) !important;
+    }
+
+    .badge-tier1 {
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+        color: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 13px;
+        display: inline-block;
+    }
+    .badge-tier2 {
+        background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+        color: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 13px;
+        display: inline-block;
+    }
+    .badge-tier3 {
+        background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+        color: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 13px;
+        display: inline-block;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# ==========================================
 # DATABASE SETUP (SQLite)
 # ==========================================
 DB_FILE = "talent_intelligence.db"
@@ -184,17 +324,20 @@ def render_radar_chart(scores_dict):
         r=values + [values[0]],
         theta=categories + [categories[0]],
         fill='toself',
-        fillcolor='rgba(79, 70, 229, 0.3)',
-        line=dict(color='#4F46E5', width=2.5),
+        fillcolor='rgba(56, 189, 248, 0.25)',
+        line=dict(color='#38BDF8', width=2.5),
         name='Competency Vector'
     ))
     fig.update_layout(
         polar=dict(
-            radialaxis=dict(visible=True, range=[0, 100])
+            radialaxis=dict(visible=True, range=[0, 100], tickfont=dict(color="#94A3B8"), gridcolor="#334155"),
+            angularaxis=dict(tickfont=dict(color="#F8FAFC", size=11), gridcolor="#334155")
         ),
         showlegend=False,
-        height=320,
-        margin=dict(l=35, r=35, t=30, b=30)
+        height=290,
+        margin=dict(l=35, r=35, t=30, b=30),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'
     )
     return fig
 
@@ -202,18 +345,19 @@ def render_gauge_chart(score):
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=score,
-        title={'text': "ATS Overall Match (%)"},
+        number={'font': {'color': '#F8FAFC', 'size': 40}},
+        title={'text': "ATS Overall Match (%)", 'font': {'color': '#94A3B8', 'size': 14}},
         gauge={
-            'axis': {'range': [0, 100]},
-            'bar': {'color': "#4F46E5"},
+            'axis': {'range': [0, 100], 'tickcolor': "#64748B"},
+            'bar': {'color': "#2563EB", 'thickness': 0.28},
             'steps': [
-                {'range': [0, 45], 'color': "#fee2e2"},
-                {'range': [45, 75], 'color': "#fef3c7"},
-                {'range': [75, 100], 'color': "#dcfce7"}
+                {'range': [0, 45], 'color': "rgba(239, 68, 68, 0.25)"},
+                {'range': [45, 75], 'color': "rgba(245, 158, 11, 0.25)"},
+                {'range': [75, 100], 'color': "rgba(16, 185, 129, 0.25)"}
             ]
         }
     ))
-    fig.update_layout(height=300, margin=dict(l=20, r=20, t=30, b=20))
+    fig.update_layout(height=280, margin=dict(l=20, r=20, t=30, b=20), paper_bgcolor='rgba(0,0,0,0)')
     return fig
 
 def generate_dossier_pdf(candidate_name, role, result):
@@ -221,8 +365,8 @@ def generate_dossier_pdf(candidate_name, role, result):
     doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=36)
     styles = getSampleStyleSheet()
     
-    title_style = ParagraphStyle('TitleStyle', parent=styles['Heading1'], fontSize=18, leading=22, textColor=colors.HexColor("#1E1B4B"))
-    h2_style = ParagraphStyle('H2Style', parent=styles['Heading2'], fontSize=12, leading=16, textColor=colors.HexColor("#4338CA"), spaceBefore=10, spaceAfter=4)
+    title_style = ParagraphStyle('TitleStyle', parent=styles['Heading1'], fontSize=18, leading=22, textColor=colors.HexColor("#0F172A"))
+    h2_style = ParagraphStyle('H2Style', parent=styles['Heading2'], fontSize=12, leading=16, textColor=colors.HexColor("#2563EB"), spaceBefore=10, spaceAfter=4)
     body = ParagraphStyle('BodyStyle', parent=styles['Normal'], fontSize=9, leading=13, textColor=colors.HexColor("#334155"))
     bullet = ParagraphStyle('BulletStyle', parent=body, leftIndent=12, spaceAfter=2)
     
@@ -240,8 +384,8 @@ def generate_dossier_pdf(candidate_name, role, result):
     ]
     t = Table(summary_data, colWidths=[130, 130, 130, 130])
     t.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#EEF2FF")),
-        ('TEXTCOLOR', (0,0), (-1,0), colors.HexColor("#312E81")),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#EFF6FF")),
+        ('TEXTCOLOR', (0,0), (-1,0), colors.HexColor("#1E3A8A")),
         ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
         ('FONTSIZE', (0,0), (-1,-1), 8),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor("#CBD5E1")),
@@ -269,32 +413,45 @@ def generate_dossier_pdf(candidate_name, role, result):
     buffer.seek(0)
     return buffer
 
-# ==========================================
-# MAIN APPLICATION HEADER
-# ==========================================
-st.title("⚡ AI Resume Analyzer + Priority Scorer")
-st.caption("Next-Gen Multi-Vector ATS Intelligence, Competency Radar & Career Upskilling Platform")
+# Session State for Clean 2-Screen Switch
+if "evaluation_result" not in st.session_state:
+    st.session_state.evaluation_result = None
+if "current_file_name" not in st.session_state:
+    st.session_state.current_file_name = None
+if "current_role" not in st.session_state:
+    st.session_state.current_role = None
 
-# Top Real-Time Metrics Bar
+# Top Real-Time Header
+st.markdown("""
+<div class="hero-banner">
+    <div class="hero-title">⚡ AI Resume Analyzer + Priority Scorer</div>
+    <div class="hero-desc">Next-Gen Multi-Vector ATS Intelligence, Competency Radar & Career Upskilling Platform</div>
+</div>
+""", unsafe_allow_html=True)
+
+# Top 4 Real-Time Metrics
 eval_df_quick = fetch_evaluations_df()
 q_count = len(eval_df_quick)
 q_avg = f"{round(eval_df_quick['match_score'].mean(), 1)}%" if q_count > 0 else "0%"
 q_top = f"{eval_df_quick['match_score'].max()}%" if q_count > 0 else "0%"
 
-col_m1, col_m2, col_m3, col_m4 = st.columns(4)
-col_m1.metric("Total Resumes Evaluated", q_count)
-col_m2.metric("Average ATS Match", q_avg)
-col_m3.metric("Top Candidate Score", q_top)
-col_m4.metric("Document Parsers", "PDF & DOCX")
+s1, s2, s3, s4 = st.columns(4)
+with s1:
+    st.markdown(f'<div class="stat-box"><div class="stat-number">{q_count}</div><div class="stat-label">Total Evaluated</div></div>', unsafe_allow_html=True)
+with s2:
+    st.markdown(f'<div class="stat-box"><div class="stat-number">{q_avg}</div><div class="stat-label">Avg ATS Match</div></div>', unsafe_allow_html=True)
+with s3:
+    st.markdown(f'<div class="stat-box"><div class="stat-number">{q_top}</div><div class="stat-label">Top ATS Score</div></div>', unsafe_allow_html=True)
+with s4:
+    st.markdown('<div class="stat-box"><div class="stat-number">PDF / DOCX</div><div class="stat-label">Parser Engine</div></div>', unsafe_allow_html=True)
 
-st.divider()
+st.write("")
 
-# Sidebar Configuration
+# Sidebar
 with st.sidebar:
-    st.header("⚙️ Engine Settings")
-    gemini_api_key = st.text_input("Enter Gemini API Key", type="password", placeholder="AIzaSy...")
-    st.info("Core Engine: **Gemini 3.6 Flash**\nDatabase: **SQLite3 RDBMS**")
-    
+    st.markdown("### ⚙️ Engine Settings")
+    gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="AIzaSy...")
+    st.caption("Engine: `Gemini 3.6 Flash` | DBMS: `SQLite3`")
     st.divider()
     st.markdown("### 🚀 Active Platform Modules")
     st.markdown("""
@@ -314,115 +471,145 @@ tab1, tab2, tab3 = st.tabs([
 
 # --- TAB 1: CANDIDATE MODE ---
 with tab1:
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.subheader("📄 1. Upload Resume Document")
-        single_file = st.file_uploader(
-            "Upload Resume (PDF or DOCX)",
-            type=["pdf", "docx"],
-            key="c_upload"
-        )
-
-    with col2:
-        st.subheader("🎯 2. Target Job Requirements")
-        role_choice = st.selectbox("Select Target Role", list(SAMPLE_JDS.keys()), key="c_role")
+    # IF RESULT IS PRESENT -> SHOW SCREEN 2 (DEDICATED DOSSIER)
+    if st.session_state.evaluation_result is not None:
+        res = st.session_state.evaluation_result
+        file_name = st.session_state.current_file_name
+        role_name = st.session_state.current_role
         
-        if role_choice == "Custom Job Description":
-            target_role = st.text_input("Custom Role Title", placeholder="e.g., Senior Full Stack Engineer")
-            jd_input = st.text_area("Paste Job Description", height=130)
-        else:
-            target_role = role_choice
-            default_jd = SAMPLE_JDS[role_choice]
-            jd_input = st.text_area("Job Requirements (Editable)", value=default_jd, height=130)
-
-    if single_file:
-        resume_content = extract_text(single_file)
-
-        if resume_content.strip():
-            with st.expander("👁️ View Extracted Resume Text"):
-                st.text_area("Parsed Text", resume_content, height=140)
+        c_back, _ = st.columns([1, 4])
+        with c_back:
+            if st.button("⬅ Upload Another Candidate", type="secondary"):
+                st.session_state.evaluation_result = None
+                st.rerun()
                 
-            st.write("")
-            if st.button("🚀 Run Comprehensive AI Evaluation", type="primary", key="btn_single"):
-                if not gemini_api_key.strip():
-                    st.error("🔑 Please enter your Gemini API Key in the left sidebar.")
-                elif not jd_input.strip():
-                    st.warning("⚠️ Please provide or select a valid Job Description.")
-                else:
-                    with st.spinner("Analyzing resume vectors and syncing with database..."):
-                        try:
-                            res = run_deep_ai_evaluation(gemini_api_key, resume_content, jd_input, target_role)
-                            save_full_evaluation(single_file.name, target_role, res)
-                            
-                            st.success("✅ Evaluation Complete & Synchronized with SQLite Database!")
-                            
-                            st.subheader("📊 Competency & Match Dashboard")
-                            v1, v2 = st.columns(2)
-                            with v1:
-                                st.plotly_chart(render_gauge_chart(res.get("match_score", 0)), use_container_width=True)
-                            with v2:
-                                st.plotly_chart(render_radar_chart(res.get("competency_scores", {})), use_container_width=True)
-                                
-                            tier = res.get('priority_tier', 'Tier-2 (Strong Potential)')
-                            st.info(f"🏆 **Candidate Priority Tier:** {tier}\n\n**Executive Summary:** {res.get('priority_reason')}")
-                            
-                            sub1, sub2, sub3, sub4, sub5 = st.tabs([
-                                "📊 Skill Matrix", 
-                                "🛠️ 30-Day Learning Roadmap", 
-                                "🎤 Interview Prep Kit", 
-                                "📝 AI Resume Enhancer",
-                                "✉️ AI Cover Letter"
-                            ])
-                            
-                            with sub1:
-                                s_col1, s_col2 = st.columns(2)
-                                with s_col1:
-                                    st.success("✅ **Matching Strengths Found**")
-                                    for item in res.get("strengths", []):
-                                        st.write(f"• {item}")
-                                with s_col2:
-                                    st.error("⚠️ **Identified Skill Deficits**")
-                                    for item in res.get("missing_skills", []):
-                                        st.write(f"• {item}")
-                                        
-                            with sub2:
-                                st.markdown("#### 🎯 Personalized 30-Day Upskilling Plan")
-                                for step in res.get("learning_roadmap", []):
-                                    st.markdown(f"**🗓️ {step.get('week')}: {step.get('focus')}** ({step.get('resource_type')})")
-                                    st.write(f"👉 *Action:* {step.get('task')}")
-                                    st.divider()
-                                    
-                            with sub3:
-                                st.markdown("#### 💡 Tailored Technical Interview Questions")
-                                for idx, q in enumerate(res.get("interview_prep_questions", []), 1):
-                                    with st.expander(f"Q{idx}: {q.get('question')} (Topic: {q.get('topic')})"):
-                                        st.info(f"**Key Evaluator Anchor:** {q.get('expected_answer_hint')}")
-                                        
-                            with sub4:
-                                st.markdown("#### ✨ Suggested High-Impact Resume Bullets (ATS Optimized)")
-                                for bullet_pt in res.get("optimized_resume_bullets", []):
-                                    st.markdown(f"> *{bullet_pt}*")
-                                    
-                            with sub5:
-                                st.markdown("#### ✉️ Personalized AI Generated Cover Letter")
-                                cover_letter_text = res.get("custom_cover_letter", "No cover letter generated.")
-                                st.text_area("Generated Cover Letter", cover_letter_text, height=220)
-                                    
-                            st.divider()
-                            pdf_doc = generate_dossier_pdf(single_file.name, target_role, res)
-                            st.download_button(
-                                label="📥 Download AI Analysis Report (PDF)",
-                                data=pdf_doc,
-                                file_name=f"{single_file.name}_AI_Report.pdf",
-                                mime="application/pdf"
-                            )
-                        except Exception as ex:
-                            st.error(f"Analysis error: {ex}")
-        else:
-            st.error("⚠️ No readable text found in the file.")
+        st.subheader("📊 Candidate Competency & ATS Intelligence Dossier")
+        
+        v1, v2 = st.columns(2)
+        with v1:
+            st.plotly_chart(render_gauge_chart(res.get("match_score", 0)), use_container_width=True)
+        with v2:
+            st.plotly_chart(render_radar_chart(res.get("competency_scores", {})), use_container_width=True)
+            
+        tier = res.get('priority_tier', 'Tier-2 (Strong Potential)')
+        badge_class = "badge-tier1" if "Tier-1" in tier else ("badge-tier2" if "Tier-2" in tier else "badge-tier3")
+        
+        st.markdown(f"""
+        <div class="section-box">
+            <span class="{badge_class}">{tier}</span>
+            <div style="margin-top: 10px; font-size: 14px; color: #CBD5E1;"><b>Executive Summary:</b> {res.get('priority_reason')}</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        sub1, sub2, sub3, sub4, sub5 = st.tabs([
+            "📊 Skill Matrix", 
+            "🛠️ 30-Day Roadmap", 
+            "🎤 Interview Kit", 
+            "📝 AI Bullets",
+            "✉️ AI Cover Letter"
+        ])
+        
+        with sub1:
+            s_col1, s_col2 = st.columns(2)
+            with s_col1:
+                st.success("✅ **Matching Strengths Found**")
+                for item in res.get("strengths", []):
+                    st.write(f"• {item}")
+            with s_col2:
+                st.error("⚠️ **Identified Skill Deficits**")
+                for item in res.get("missing_skills", []):
+                    st.write(f"• {item}")
+                    
+        with sub2:
+            st.markdown("#### 🎯 Personalized 30-Day Upskilling Plan")
+            for step in res.get("learning_roadmap", []):
+                st.markdown(f"**🗓️ {step.get('week')}: {step.get('focus')}** ({step.get('resource_type')})")
+                st.write(f"👉 *Action:* {step.get('task')}")
+                st.divider()
+                
+        with sub3:
+            st.markdown("#### 💡 Tailored Technical Interview Questions")
+            for idx, q in enumerate(res.get("interview_prep_questions", []), 1):
+                with st.expander(f"Q{idx}: {q.get('question')} (Topic: {q.get('topic')})"):
+                    st.info(f"**Key Evaluator Anchor:** {q.get('expected_answer_hint')}")
+                    
+        with sub4:
+            st.markdown("#### ✨ Suggested High-Impact Resume Bullets (ATS Optimized)")
+            for bullet_pt in res.get("optimized_resume_bullets", []):
+                st.markdown(f"> *{bullet_pt}*")
+                
+        with sub5:
+            st.markdown("#### ✉️ Personalized AI Generated Cover Letter")
+            cover_letter_text = res.get("custom_cover_letter", "No cover letter generated.")
+            st.text_area("Generated Cover Letter", cover_letter_text, height=200)
+                
+        st.divider()
+        pdf_doc = generate_dossier_pdf(file_name, role_name, res)
+        st.download_button(
+            label="📥 Download AI Analysis Report (PDF)",
+            data=pdf_doc,
+            file_name=f"{file_name}_AI_Report.pdf",
+            mime="application/pdf"
+        )
+        
+    # ELSE -> SHOW SCREEN 1 (CLEAN UPLOAD HUB)
     else:
-        st.info("💡 **Quick Start Guide:** 1. Enter Gemini API Key in sidebar ➔ 2. Upload Resume & choose Job Role ➔ 3. Click 'Run Evaluation'.")
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.markdown('<div class="section-header">📄 1. Upload Resume Document</div>', unsafe_allow_html=True)
+            single_file = st.file_uploader(
+                "Upload Candidate Document",
+                type=["pdf", "docx"],
+                key="c_upload",
+                label_visibility="collapsed"
+            )
+
+        with col2:
+            st.markdown('<div class="section-header">🎯 2. Target Role Requirements</div>', unsafe_allow_html=True)
+            role_choice = st.selectbox("Position Opening", list(SAMPLE_JDS.keys()), key="c_role")
+            
+            if role_choice == "Custom Job Description":
+                target_role = st.text_input("Role Title", placeholder="e.g., Senior Full Stack Engineer")
+                jd_input = st.text_area("Job Description Requirements", height=130, placeholder="Paste requirements...")
+            else:
+                target_role = role_choice
+                default_jd = SAMPLE_JDS[role_choice]
+                jd_input = st.text_area("Job Description Requirements (Editable)", value=default_jd, height=130)
+
+        if single_file:
+            resume_content = extract_text(single_file)
+
+            if resume_content.strip():
+                with st.expander("👁️ View Extracted Document Content"):
+                    st.text_area("Extracted Raw Text", resume_content, height=140)
+                    
+                st.write("")
+                if st.button("🚀 Run Comprehensive AI Evaluation", type="primary", key="btn_single"):
+                    if not gemini_api_key.strip():
+                        st.error("🔑 Please enter your Gemini API Key in the left sidebar.")
+                    elif not jd_input.strip():
+                        st.warning("⚠️ Please provide or select a Job Description.")
+                    else:
+                        with st.spinner("Extracting multi-dimensional vectors and synchronizing with database..."):
+                            try:
+                                res = run_deep_ai_evaluation(gemini_api_key, resume_content, jd_input, target_role)
+                                save_full_evaluation(single_file.name, target_role, res)
+                                st.session_state.evaluation_result = res
+                                st.session_state.current_file_name = single_file.name
+                                st.session_state.current_role = target_role
+                                st.rerun()
+                            except Exception as ex:
+                                st.error(f"Analysis error: {ex}")
+            else:
+                st.error("⚠️ No readable text found in the file.")
+        else:
+            st.markdown("""
+            <div style="background: #1E293B; border: 1px dashed #475569; border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px;">
+                <div style="font-size: 15px; font-weight: 700; color: #38BDF8; margin-bottom: 6px;">⚡ Quick Start Guide</div>
+                <div style="font-size: 13px; color: #94A3B8;">1. Enter your Gemini API Key in the left sidebar.<br>2. Upload a Resume (PDF/DOCX) above and select a Target Role.<br>3. Click 'Run Comprehensive AI Evaluation' to launch your dedicated Intelligence Dossier.</div>
+            </div>
+            """, unsafe_allow_html=True)
 
 # --- TAB 2: RECRUITER MODE ---
 with tab2:
@@ -484,7 +671,7 @@ with tab3:
         
         st.divider()
         st.subheader("⚙️ Update Candidate Recruitment Status")
-        st_c1, st_c2, st_c3 = st.columns([1, 1, 1])
+        st_c1, st_c2, st_c3 = st.columns(3)
         with st_c1:
             selected_eval_id = st.selectbox("Select Evaluation ID", eval_records["eval_id"].tolist())
         with st_c2:
