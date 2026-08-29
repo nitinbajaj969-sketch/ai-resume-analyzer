@@ -21,29 +21,44 @@ st.set_page_config(
 )
 
 # ==========================================
-# ADVANCED GLASSMORPHISM & NEON GLOW CSS
+# ULTRA-POLISHED CYBER-THEME (100% CONTRAST FIX)
 # ==========================================
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
-    html, body, [class*="css"] {
+    * {
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
     /* Background Canvas */
     .stApp {
         background: radial-gradient(circle at 15% 15%, #131b2e 0%, #0b0f19 60%, #05070b 100%) !important;
+        color: #F8FAFC !important;
     }
-    
+
+    /* Fixed Dark Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #0d1322 !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    [data-testid="stSidebar"] * {
+        color: #F8FAFC !important;
+    }
+    [data-testid="stSidebar"] .stTextInput input {
+        background-color: #1a2234 !important;
+        color: #FFFFFF !important;
+        border: 1px solid #3b4866 !important;
+    }
+
     /* Top Hero Header */
     .hero-banner {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.18) 0%, rgba(168, 85, 247, 0.12) 50%, rgba(59, 130, 246, 0.18) 100%);
-        border: 1px solid rgba(139, 92, 246, 0.35);
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.15) 50%, rgba(59, 130, 246, 0.2) 100%);
+        border: 1px solid rgba(139, 92, 246, 0.4);
         border-radius: 16px;
         padding: 24px;
         margin-bottom: 20px;
-        box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.35);
         backdrop-filter: blur(15px);
         text-align: center;
     }
@@ -58,19 +73,19 @@ st.markdown("""
     }
     
     .hero-desc {
-        color: #94A3B8;
+        color: #CBD5E1;
         font-size: 14px;
         margin: 0;
     }
 
-    /* Modern Quick Stat Box */
+    /* Quick Stat Box */
     .stat-box {
-        background: rgba(17, 24, 39, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(26, 34, 52, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         padding: 14px 18px;
         text-align: center;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
     .stat-number {
         font-size: 22px;
@@ -84,14 +99,48 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
     
+    /* High-Contrast Section Headings */
+    .section-header {
+        font-size: 18px;
+        font-weight: 700;
+        color: #FFFFFF !important;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
     /* Glass Cards */
     .glass-card {
-        background: rgba(17, 24, 39, 0.75);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(26, 34, 52, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 14px;
         padding: 20px;
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         margin-bottom: 16px;
+    }
+
+    /* Ultra Readable Tab Bar */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background: rgba(13, 19, 34, 0.6);
+        padding: 6px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .stTabs [data-baseweb="tab"] {
+        background: #1e293b !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+        padding: 10px 20px !important;
+        font-weight: 600 !important;
+        color: #CBD5E1 !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%) !important;
+        color: #FFFFFF !important;
+        border: 1px solid #A855F7 !important;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5) !important;
     }
 
     /* Badges */
@@ -124,25 +173,6 @@ st.markdown("""
         font-size: 13px;
         display: inline-block;
         box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-    }
-    
-    /* Polished Tab Bar */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background: rgba(30, 41, 59, 0.4) !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        border-radius: 8px !important;
-        padding: 8px 18px !important;
-        font-weight: 600 !important;
-        color: #94A3B8 !important;
-    }
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%) !important;
-        color: #FFFFFF !important;
-        border: 1px solid rgba(168, 85, 247, 0.5) !important;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -317,8 +347,8 @@ def render_radar_chart(scores_dict):
     ))
     fig.update_layout(
         polar=dict(
-            radialaxis=dict(visible=True, range=[0, 100], tickfont=dict(size=10, color="#94A3B8"), gridcolor="rgba(255,255,255,0.08)"),
-            angularaxis=dict(tickfont=dict(color="#E2E8F0", size=11), gridcolor="rgba(255,255,255,0.08)")
+            radialaxis=dict(visible=True, range=[0, 100], tickfont=dict(size=10, color="#94A3B8"), gridcolor="rgba(255,255,255,0.1)"),
+            angularaxis=dict(tickfont=dict(color="#E2E8F0", size=11), gridcolor="rgba(255,255,255,0.1)")
         ),
         showlegend=False,
         height=290,
@@ -429,12 +459,19 @@ with s4:
 st.write("")
 
 with st.sidebar:
-    st.markdown("### ⚙️ Engine Config")
-    gemini_api_key = st.text_input("Enter Gemini API Key", type="password", placeholder="AIzaSy...")
-    st.caption("Core: `Gemini 3.6 Flash` | Database: `SQLite3`")
+    st.markdown("### ⚙️ Engine Settings")
+    gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="AIzaSy...")
+    st.caption("Engine: `Gemini 3.6 Flash` | DBMS: `SQLite3`")
     st.divider()
-    st.markdown("#### 🚀 Active Capabilities:")
-    st.markdown("• 🎯 Deep Vector Scoring\n• 🕸️ 5D Competency Radar\n• 🛠️ 30-Day Learning Path\n• 🎤 Technical Interview Kit\n• 🏢 Recruiter Pipeline Matrix\n• 🗄️ Relational RDBMS Logs")
+    st.markdown("### 🚀 Active Capabilities")
+    st.markdown("""
+    * 🎯 **Deep Vector Scoring**
+    * 🕸️ **5D Competency Radar**
+    * 🛠️ **30-Day Learning Path**
+    * 🎤 **Technical Interview Kit**
+    * 🏢 **Recruiter Pipeline Matrix**
+    * 🗄️ **Relational RDBMS Logs**
+    """)
 
 tab1, tab2, tab3 = st.tabs([
     "👤 Candidate Mode (Deep Analysis)", 
@@ -447,15 +484,16 @@ with tab1:
     col1, col2 = st.columns([1, 1])
 
     with col1:
-        st.markdown("##### 📄 1. Upload Resume Document")
+        st.markdown('<div class="section-header">📄 1. Upload Resume Document</div>', unsafe_allow_html=True)
         single_file = st.file_uploader(
-            "Upload Candidate Document",
+            "Upload Candidate Document (PDF / DOCX)",
             type=["pdf", "docx"],
-            key="c_upload"
+            key="c_upload",
+            label_visibility="collapsed"
         )
 
     with col2:
-        st.markdown("##### 🎯 2. Target Role Requirements")
+        st.markdown('<div class="section-header">🎯 2. Target Role Requirements</div>', unsafe_allow_html=True)
         role_choice = st.selectbox("Position Opening", list(SAMPLE_JDS.keys()), key="c_role")
         
         if role_choice == "Custom Job Description":
@@ -559,9 +597,8 @@ with tab1:
         else:
             st.error("⚠️ No readable text found in the file.")
     else:
-        # Initial Landing Guide when no file is uploaded yet
         st.markdown("""
-        <div style="background: rgba(30, 41, 59, 0.35); border: 1px dashed rgba(148, 163, 184, 0.25); border-radius: 14px; padding: 24px; text-align: center; margin-top: 15px;">
+        <div style="background: rgba(26, 34, 52, 0.4); border: 1px dashed rgba(148, 163, 184, 0.25); border-radius: 14px; padding: 24px; text-align: center; margin-top: 15px;">
             <div style="font-size: 16px; font-weight: 600; color: #E2E8F0; margin-bottom: 6px;">⚡ Quick Start Instructions</div>
             <div style="font-size: 13px; color: #94A3B8;">1. Enter your Gemini API Key in the left sidebar.<br>2. Upload a Resume (PDF/DOCX) above and select a Job Role.<br>3. Click 'Run Comprehensive AI Evaluation' to generate real-time radar vectors, interview questions & roadmap.</div>
         </div>
@@ -619,29 +656,4 @@ with tab3:
         m1, m2, m3, m4 = st.columns(4)
         m1.metric("Evaluations Count", len(eval_records))
         m2.metric("Average Score", f"{round(eval_records['match_score'].mean(), 1)}%")
-        m3.metric("Top Score", f"{eval_records['match_score'].max()}%")
-        tier1_count = len(eval_records[eval_records['priority_tier'].str.contains('Tier-1', na=False)])
-        m4.metric("Tier-1 Shortlisted", tier1_count)
-        
-        st.dataframe(eval_records, use_container_width=True)
-        
-        st.divider()
-        st.subheader("⚙️ Update Candidate Recruitment Status")
-        st_c1, st_c2, st_c3 = st.columns([1, 1, 1])
-        with st_c1:
-            selected_eval_id = st.selectbox("Select Evaluation ID", eval_records["eval_id"].tolist())
-        with st_c2:
-            new_status_val = st.selectbox("Set Status", ["Under Review", "Shortlisted for Interview", "Technical Assessment Sent", "Rejected"])
-        with st_c3:
-            st.write("")
-            st.write("")
-            if st.button("Update Status in DB"):
-                update_candidate_status(selected_eval_id, new_status_val)
-                st.success("Status Updated in SQLite Database!")
-                st.rerun()
-                
-        # Export
-        csv_dump = eval_records.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Export Complete Database (CSV)", csv_dump, "All_Evaluations_Database_Dump.csv", "text/csv")
-    else:
-        st.info("No database records found. Execute evaluations to generate live logs.")
+        m3.metric("Top Score", f"{eval_records['match_score'].max()
