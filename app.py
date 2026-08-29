@@ -20,145 +20,63 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==========================================
-# ROBUST SLATE-NAVY THEME (SELF-CONTAINED)
-# ==========================================
+# Custom Banner & Stat Box Styling (Matching Screenshot)
 st.markdown("""
 <style>
-    /* Global Base */
-    .stApp, header, [data-testid="stHeader"] {
-        background-color: #0F172A !important;
-        color: #F8FAFC !important;
-    }
-
-    /* Sidebar Base */
-    [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {
-        background-color: #1E293B !important;
-        border-right: 1px solid #334155 !important;
-    }
-    [data-testid="stSidebar"] * {
-        color: #F8FAFC !important;
-    }
-
-    /* All Text Inputs & Password Fields */
-    input[type="text"], input[type="password"], textarea {
-        background-color: #0F172A !important;
-        color: #FFFFFF !important;
-        border: 1px solid #38BDF8 !important;
-        border-radius: 8px !important;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
     
-    /* Password Eye Button Container */
-    [data-baseweb="input"] {
-        background-color: #0F172A !important;
-        border: 1px solid #38BDF8 !important;
-        border-radius: 8px !important;
-    }
-    [data-baseweb="input"] button {
-        background-color: transparent !important;
-        color: #38BDF8 !important;
-    }
-
-    /* Selectbox Dropdown */
-    [data-baseweb="select"] > div {
-        background-color: #0F172A !important;
-        color: #FFFFFF !important;
-        border: 1px solid #334155 !important;
-        border-radius: 8px !important;
-    }
-    [data-baseweb="popover"], [data-baseweb="menu"] {
-        background-color: #1E293B !important;
-        color: #FFFFFF !important;
-    }
-    [data-baseweb="menu"] li {
-        color: #F8FAFC !important;
-    }
-
-    /* File Uploader Dropzone & Button */
-    [data-testid="stFileUploader"] section {
-        background-color: #0F172A !important;
-        border: 1.5px dashed #38BDF8 !important;
-        border-radius: 10px !important;
-        padding: 16px !important;
-    }
-    [data-testid="stFileUploader"] section * {
-        color: #CBD5E1 !important;
-    }
-    [data-testid="stFileUploader"] button {
-        background: #2563EB !important;
-        color: #FFFFFF !important;
-        border: none !important;
-        font-weight: 600 !important;
-    }
-
-    /* Top Title Card */
-    .hero-card {
-        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-        border: 1px solid #334155;
+    .hero-container {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background: #111A2E;
+        border: 1px solid #1E2B45;
         border-radius: 12px;
-        padding: 22px;
+        padding: 24px 16px;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
-    .hero-card h1 {
-        color: #38BDF8;
-        font-size: 30px;
+    .hero-title {
+        font-size: 32px;
         font-weight: 800;
-        margin: 0 0 6px 0;
+        color: #38BDF8;
+        margin: 0 0 8px 0;
+        letter-spacing: -0.5px;
     }
-    .hero-card p {
+    .hero-subtitle {
+        font-size: 13.5px;
         color: #94A3B8;
-        font-size: 14px;
         margin: 0;
     }
-
-    /* Metric Badges Top Bar */
-    .metric-card {
-        background: #1E293B;
-        border: 1px solid #334155;
-        border-radius: 10px;
-        padding: 12px;
-        text-align: center;
+    
+    .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 24px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .metric-val {
-        font-size: 22px;
+    .stat-card {
+        background: #111A2E;
+        border: 1px solid #1E2B45;
+        border-radius: 10px;
+        padding: 16px 12px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .stat-val {
+        font-size: 26px;
         font-weight: 800;
         color: #38BDF8;
+        line-height: 1.2;
     }
-    .metric-lbl {
+    .stat-lbl {
         font-size: 11px;
+        font-weight: 700;
         color: #94A3B8;
         text-transform: uppercase;
-        font-weight: 600;
+        letter-spacing: 0.6px;
+        margin-top: 4px;
     }
-
-    /* Navigation Tabs */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-        background-color: #0F172A;
-        border: 1px solid #334155;
-        padding: 6px;
-        border-radius: 10px;
-        margin-bottom: 16px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background-color: #1E293B !important;
-        border: 1px solid #334155 !important;
-        border-radius: 8px !important;
-        padding: 8px 18px !important;
-        color: #CBD5E1 !important;
-        font-weight: 600 !important;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #2563EB !important;
-        color: #FFFFFF !important;
-        border-color: #38BDF8 !important;
-    }
-
-    /* Priority Badges */
-    .badge-tier1 { background: #059669; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; display: inline-block; }
-    .badge-tier2 { background: #D97706; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; display: inline-block; }
-    .badge-tier3 { background: #DC2626; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; display: inline-block; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -325,19 +243,16 @@ def render_radar_chart(scores_dict):
         theta=categories + [categories[0]],
         fill='toself',
         fillcolor='rgba(56, 189, 248, 0.25)',
-        line=dict(color='#38BDF8', width=2.5),
+        line=dict(color='#0284C7', width=2.5),
         name='Competency Vector'
     ))
     fig.update_layout(
         polar=dict(
-            radialaxis=dict(visible=True, range=[0, 100], tickfont=dict(color="#94A3B8"), gridcolor="#334155"),
-            angularaxis=dict(tickfont=dict(color="#F8FAFC", size=11), gridcolor="#334155")
+            radialaxis=dict(visible=True, range=[0, 100])
         ),
         showlegend=False,
-        height=290,
-        margin=dict(l=35, r=35, t=30, b=30),
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)'
+        height=300,
+        margin=dict(l=35, r=35, t=30, b=30)
     )
     return fig
 
@@ -345,19 +260,18 @@ def render_gauge_chart(score):
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=score,
-        number={'font': {'color': '#F8FAFC', 'size': 40}},
-        title={'text': "ATS Overall Match (%)", 'font': {'color': '#94A3B8', 'size': 14}},
+        title={'text': "ATS Overall Match (%)"},
         gauge={
-            'axis': {'range': [0, 100], 'tickcolor': "#64748B"},
-            'bar': {'color': "#2563EB", 'thickness': 0.28},
+            'axis': {'range': [0, 100]},
+            'bar': {'color': "#0284C7", 'thickness': 0.28},
             'steps': [
-                {'range': [0, 45], 'color': "rgba(239, 68, 68, 0.25)"},
-                {'range': [45, 75], 'color': "rgba(245, 158, 11, 0.25)"},
-                {'range': [75, 100], 'color': "rgba(16, 185, 129, 0.25)"}
+                {'range': [0, 45], 'color': "rgba(239, 68, 68, 0.2)"},
+                {'range': [45, 75], 'color': "rgba(245, 158, 11, 0.2)"},
+                {'range': [75, 100], 'color': "rgba(16, 185, 129, 0.2)"}
             ]
         }
     ))
-    fig.update_layout(height=280, margin=dict(l=20, r=20, t=30, b=20), paper_bgcolor='rgba(0,0,0,0)')
+    fig.update_layout(height=280, margin=dict(l=20, r=20, t=30, b=20))
     return fig
 
 def generate_dossier_pdf(candidate_name, role, result):
@@ -366,7 +280,7 @@ def generate_dossier_pdf(candidate_name, role, result):
     styles = getSampleStyleSheet()
     
     title_style = ParagraphStyle('TitleStyle', parent=styles['Heading1'], fontSize=18, leading=22, textColor=colors.HexColor("#0F172A"))
-    h2_style = ParagraphStyle('H2Style', parent=styles['Heading2'], fontSize=12, leading=16, textColor=colors.HexColor("#2563EB"), spaceBefore=10, spaceAfter=4)
+    h2_style = ParagraphStyle('H2Style', parent=styles['Heading2'], fontSize=12, leading=16, textColor=colors.HexColor("#0284C7"), spaceBefore=10, spaceAfter=4)
     body = ParagraphStyle('BodyStyle', parent=styles['Normal'], fontSize=9, leading=13, textColor=colors.HexColor("#334155"))
     bullet = ParagraphStyle('BulletStyle', parent=body, leftIndent=12, spaceAfter=2)
     
@@ -413,7 +327,7 @@ def generate_dossier_pdf(candidate_name, role, result):
     buffer.seek(0)
     return buffer
 
-# Session States for 2-Screen Switch
+# Session States
 if "evaluation_result" not in st.session_state:
     st.session_state.evaluation_result = None
 if "current_file_name" not in st.session_state:
@@ -421,37 +335,47 @@ if "current_file_name" not in st.session_state:
 if "current_role" not in st.session_state:
     st.session_state.current_role = None
 
-# Header Banner
+# TOP HERO BANNER (MATCHING IMAGE)
 st.markdown("""
-<div class="hero-card">
-    <h1>⚡ AI Resume Analyzer + ATS Intelligence</h1>
-    <p>Next-Gen Multi-Vector ATS Intelligence, Competency Radar & Career Upskilling Platform</p>
+<div class="hero-container">
+    <div class="hero-title">⚡ AI Resume Analyzer + ATS Intelligence</div>
+    <div class="hero-subtitle">Next-Gen Multi-Vector ATS Intelligence, Competency Radar & Career Upskilling Platform</div>
 </div>
 """, unsafe_allow_html=True)
 
-# Top 4 Live Metrics
+# TOP 4 STAT CARDS (MATCHING IMAGE)
 eval_df_quick = fetch_evaluations_df()
 q_count = len(eval_df_quick)
 q_avg = f"{round(eval_df_quick['match_score'].mean(), 1)}%" if q_count > 0 else "0%"
 q_top = f"{eval_df_quick['match_score'].max()}%" if q_count > 0 else "0%"
 
-s1, s2, s3, s4 = st.columns(4)
-with s1:
-    st.markdown(f'<div class="metric-card"><div class="metric-val">{q_count}</div><div class="metric-lbl">Total Evaluated</div></div>', unsafe_allow_html=True)
-with s2:
-    st.markdown(f'<div class="metric-card"><div class="metric-val">{q_avg}</div><div class="metric-lbl">Avg ATS Match</div></div>', unsafe_allow_html=True)
-with s3:
-    st.markdown(f'<div class="metric-card"><div class="metric-val">{q_top}</div><div class="metric-lbl">Top ATS Score</div></div>', unsafe_allow_html=True)
-with s4:
-    st.markdown('<div class="metric-card"><div class="metric-val">PDF / DOCX</div><div class="metric-lbl">Parser Engine</div></div>', unsafe_allow_html=True)
-
-st.write("")
+st.markdown(f"""
+<div class="metric-grid">
+    <div class="stat-card">
+        <div class="stat-val">{q_count}</div>
+        <div class="stat-lbl">TOTAL EVALUATED</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-val">{q_avg}</div>
+        <div class="stat-lbl">AVG ATS MATCH</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-val">{q_top}</div>
+        <div class="stat-lbl">TOP ATS SCORE</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-val">PDF / DOCX</div>
+        <div class="stat-lbl">PARSER ENGINE</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # Sidebar
 with st.sidebar:
-    st.markdown("### ⚙️ Engine Settings")
-    gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="Paste AIzaSy key...")
-    st.caption("Engine: `Gemini 3.6 Flash` | DBMS: `SQLite3`")
+    st.header("⚙️ Engine Settings")
+    gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="AIzaSy...")
+    st.info("Core Engine: **Gemini 3.6 Flash**\nDatabase: **SQLite3**")
+    
     st.divider()
     st.markdown("### 🚀 Active Platform Modules")
     st.markdown("""
@@ -491,14 +415,7 @@ with tab1:
             st.plotly_chart(render_radar_chart(res.get("competency_scores", {})), use_container_width=True)
             
         tier = res.get('priority_tier', 'Tier-2 (Strong Potential)')
-        badge_class = "badge-tier1" if "Tier-1" in tier else ("badge-tier2" if "Tier-2" in tier else "badge-tier3")
-        
-        st.markdown(f"""
-        <div style="background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 16px; margin-bottom: 16px;">
-            <span class="{badge_class}">{tier}</span>
-            <div style="margin-top: 10px; font-size: 14px; color: #E2E8F0;"><b>Executive Summary:</b> {res.get('priority_reason')}</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.info(f"🏆 **Candidate Priority Tier:** {tier}\n\n**Executive Summary:** {res.get('priority_reason')}")
         
         sub1, sub2, sub3, sub4, sub5 = st.tabs([
             "📊 Skill Matrix", 
@@ -555,7 +472,7 @@ with tab1:
         col1, col2 = st.columns(2)
 
         with col1:
-            st.markdown("### 📄 1. Upload Resume Document")
+            st.subheader("📄 1. Upload Resume Document")
             single_file = st.file_uploader(
                 "Upload Candidate Document (PDF / DOCX)",
                 type=["pdf", "docx"],
@@ -563,7 +480,7 @@ with tab1:
             )
 
         with col2:
-            st.markdown("### 🎯 2. Target Role Requirements")
+            st.subheader("🎯 2. Target Role Requirements")
             role_choice = st.selectbox("Position Opening", list(SAMPLE_JDS.keys()), key="c_role")
             
             if role_choice == "Custom Job Description":
@@ -601,12 +518,7 @@ with tab1:
             else:
                 st.error("⚠️ No readable text found in the file.")
         else:
-            st.markdown("""
-            <div style="background: #1E293B; border: 1px dashed #475569; border-radius: 12px; padding: 22px; text-align: center; margin-top: 15px;">
-                <div style="font-size: 15px; font-weight: 700; color: #38BDF8; margin-bottom: 6px;">⚡ Quick Start Guide</div>
-                <div style="font-size: 13px; color: #CBD5E1;">1. Enter your Gemini API Key in the left sidebar.<br>2. Upload a Resume (PDF/DOCX) above and select a Target Role.<br>3. Click 'Run Comprehensive AI Evaluation' to launch your dedicated Intelligence Dossier.</div>
-            </div>
-            """, unsafe_allow_html=True)
+            st.info("⚡ **Quick Start:** 1. Enter Gemini API Key in sidebar ➔ 2. Upload Resume & choose Job Role ➔ 3. Click 'Run Evaluation'.")
 
 # --- TAB 2: RECRUITER MODE ---
 with tab2:
