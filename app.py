@@ -14,65 +14,77 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 
 st.set_page_config(
-    page_title="AI Resume Analyzer + Priority Scorer",
+    page_title="TalentIntel AI — ATS Intelligence & Talent Scorer",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # ==========================================
-# SLATE-NAVY ENTERPRISE CUSTOM THEME
+# 100% HIGH-CONTRAST SLATE-NAVY UI SYSTEM
 # ==========================================
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
     * {
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
     
+    /* Main Canvas Background */
     .stApp {
-        background: #0F172A !important;
+        background-color: #0B0F19 !important;
         color: #F8FAFC !important;
     }
 
+    /* Fixed Dark Sidebar */
     [data-testid="stSidebar"] {
-        background-color: #1E293B !important;
-        border-right: 1px solid #334155 !important;
+        background-color: #111827 !important;
+        border-right: 1px solid #1F2937 !important;
     }
     [data-testid="stSidebar"] * {
         color: #F8FAFC !important;
     }
-    [data-testid="stSidebar"] .stTextInput input {
-        background-color: #0F172A !important;
-        color: #38BDF8 !important;
-        border: 1px solid #475569 !important;
+
+    /* All Inputs, TextAreas & Selectboxes - 100% Crisp Visible */
+    .stTextInput input, .stTextArea textarea, [data-baseweb="select"] div {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        border: 1px solid #3B82F6 !important;
+        font-size: 14px !important;
+        border-radius: 8px !important;
+    }
+    .stTextArea textarea {
+        color: #F1F5F9 !important;
+        line-height: 1.5 !important;
     }
 
+    /* Top Hero Header */
     .hero-banner {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
-        border: 1px solid #334155;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(17, 24, 39, 0.95) 100%);
+        border: 1px solid #374151;
         border-radius: 12px;
-        padding: 20px;
+        padding: 22px;
         margin-bottom: 20px;
-        box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.6);
         text-align: center;
     }
-    
     .hero-title {
-        font-size: 28px;
+        font-size: 30px;
         font-weight: 800;
-        color: #38BDF8;
-        margin-bottom: 4px;
+        background: linear-gradient(90deg, #38BDF8 0%, #818CF8 50%, #C084FC 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 6px;
         letter-spacing: 0.5px;
     }
-    
     .hero-desc {
         color: #94A3B8;
-        font-size: 13px;
+        font-size: 14px;
         margin: 0;
     }
 
+    /* Metric Cards */
     .stat-box {
         background: #1E293B;
         border: 1px solid #334155;
@@ -93,47 +105,43 @@ st.markdown("""
         letter-spacing: 0.5px;
         font-weight: 600;
     }
-    
-    .section-box {
+
+    /* Tabs Styling - Solid, Crisp & Visible */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background: #111827;
+        padding: 6px;
+        border-radius: 10px;
+        border: 1px solid #374151;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background: #1F2937 !important;
+        border: 1px solid #374151 !important;
+        border-radius: 8px !important;
+        padding: 10px 22px !important;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+        color: #E2E8F0 !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%) !important;
+        color: #FFFFFF !important;
+        border: 1px solid #60A5FA !important;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4) !important;
+    }
+
+    /* Cards & Badges */
+    .section-card {
         background: #1E293B;
         border: 1px solid #334155;
         border-radius: 12px;
         padding: 18px;
         margin-bottom: 16px;
     }
-    .section-header {
-        font-size: 16px;
-        font-weight: 700;
-        color: #F8FAFC !important;
-        margin-bottom: 12px;
-    }
-
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background: #0F172A;
-        padding: 6px;
-        border-radius: 10px;
-        border: 1px solid #334155;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background: #1E293B !important;
-        border: 1px solid #334155 !important;
-        border-radius: 8px !important;
-        padding: 8px 16px !important;
-        font-weight: 600 !important;
-        color: #94A3B8 !important;
-    }
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%) !important;
-        color: #FFFFFF !important;
-        border: 1px solid #38BDF8 !important;
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4) !important;
-    }
-
     .badge-tier1 {
         background: linear-gradient(135deg, #059669 0%, #10B981 100%);
         color: white;
-        padding: 6px 16px;
+        padding: 6px 18px;
         border-radius: 20px;
         font-weight: 700;
         font-size: 13px;
@@ -142,7 +150,7 @@ st.markdown("""
     .badge-tier2 {
         background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
         color: white;
-        padding: 6px 16px;
+        padding: 6px 18px;
         border-radius: 20px;
         font-weight: 700;
         font-size: 13px;
@@ -151,7 +159,7 @@ st.markdown("""
     .badge-tier3 {
         background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
         color: white;
-        padding: 6px 16px;
+        padding: 6px 18px;
         border-radius: 20px;
         font-weight: 700;
         font-size: 13px;
@@ -371,7 +379,7 @@ def generate_dossier_pdf(candidate_name, role, result):
     bullet = ParagraphStyle('BulletStyle', parent=body, leftIndent=12, spaceAfter=2)
     
     story = []
-    story.append(Paragraph("AI Resume Analysis & Priority Report", title_style))
+    story.append(Paragraph("TalentIntel AI — Candidate Dossier", title_style))
     story.append(Paragraph(f"<b>Candidate:</b> {candidate_name} &nbsp;|&nbsp; <b>Target Role:</b> {role} &nbsp;|&nbsp; <b>Date:</b> {datetime.now().strftime('%d %b %Y')}", body))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#CBD5E1"), spaceBefore=6, spaceAfter=10))
     
@@ -413,7 +421,7 @@ def generate_dossier_pdf(candidate_name, role, result):
     buffer.seek(0)
     return buffer
 
-# Session State for Clean 2-Screen Switch
+# Session States
 if "evaluation_result" not in st.session_state:
     st.session_state.evaluation_result = None
 if "current_file_name" not in st.session_state:
@@ -421,15 +429,15 @@ if "current_file_name" not in st.session_state:
 if "current_role" not in st.session_state:
     st.session_state.current_role = None
 
-# Top Real-Time Header
+# Hero Header with New Clean Branding
 st.markdown("""
 <div class="hero-banner">
-    <div class="hero-title">⚡ AI Resume Analyzer + Priority Scorer</div>
-    <div class="hero-desc">Next-Gen Multi-Vector ATS Intelligence, Competency Radar & Career Upskilling Platform</div>
+    <div class="hero-title">⚡ TalentIntel AI</div>
+    <div class="hero-desc">Enterprise ATS Intelligence, 5D Competency Vectors & Priority Talent Pipeline</div>
 </div>
 """, unsafe_allow_html=True)
 
-# Top 4 Real-Time Metrics
+# Top 4 Real-Time Live Metrics
 eval_df_quick = fetch_evaluations_df()
 q_count = len(eval_df_quick)
 q_avg = f"{round(eval_df_quick['match_score'].mean(), 1)}%" if q_count > 0 else "0%"
@@ -450,8 +458,13 @@ st.write("")
 # Sidebar
 with st.sidebar:
     st.markdown("### ⚙️ Engine Settings")
-    gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="AIzaSy...")
-    st.caption("Engine: `Gemini 3.6 Flash` | DBMS: `SQLite3`")
+    gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="Paste AIzaSy key...")
+    st.markdown("""
+    <div style="background: rgba(37, 99, 235, 0.15); border: 1px solid #3B82F6; padding: 8px; border-radius: 8px; font-size: 12px; color: #93C5FD; text-align: center; margin-top: 4px;">
+        ⚡ <b>Active:</b> Gemini 3.6 Flash | SQLite3
+    </div>
+    """, unsafe_allow_html=True)
+    
     st.divider()
     st.markdown("### 🚀 Active Platform Modules")
     st.markdown("""
@@ -471,7 +484,6 @@ tab1, tab2, tab3 = st.tabs([
 
 # --- TAB 1: CANDIDATE MODE ---
 with tab1:
-    # IF RESULT IS PRESENT -> SHOW SCREEN 2 (DEDICATED DOSSIER)
     if st.session_state.evaluation_result is not None:
         res = st.session_state.evaluation_result
         file_name = st.session_state.current_file_name
@@ -495,9 +507,9 @@ with tab1:
         badge_class = "badge-tier1" if "Tier-1" in tier else ("badge-tier2" if "Tier-2" in tier else "badge-tier3")
         
         st.markdown(f"""
-        <div class="section-box">
+        <div class="section-card">
             <span class="{badge_class}">{tier}</span>
-            <div style="margin-top: 10px; font-size: 14px; color: #CBD5E1;"><b>Executive Summary:</b> {res.get('priority_reason')}</div>
+            <div style="margin-top: 10px; font-size: 14px; color: #E2E8F0;"><b>Executive Summary:</b> {res.get('priority_reason')}</div>
         </div>
         """, unsafe_allow_html=True)
         
@@ -546,36 +558,34 @@ with tab1:
         st.divider()
         pdf_doc = generate_dossier_pdf(file_name, role_name, res)
         st.download_button(
-            label="📥 Download AI Analysis Report (PDF)",
+            label="📥 Download Official AI Candidate Dossier (PDF)",
             data=pdf_doc,
             file_name=f"{file_name}_AI_Report.pdf",
             mime="application/pdf"
         )
         
-    # ELSE -> SHOW SCREEN 1 (CLEAN UPLOAD HUB)
     else:
         col1, col2 = st.columns(2)
 
         with col1:
-            st.markdown('<div class="section-header">📄 1. Upload Resume Document</div>', unsafe_allow_html=True)
+            st.markdown("### 📄 1. Upload Resume Document")
             single_file = st.file_uploader(
-                "Upload Candidate Document",
+                "Upload Resume (PDF / DOCX)",
                 type=["pdf", "docx"],
-                key="c_upload",
-                label_visibility="collapsed"
+                key="c_upload"
             )
 
         with col2:
-            st.markdown('<div class="section-header">🎯 2. Target Role Requirements</div>', unsafe_allow_html=True)
+            st.markdown("### 🎯 2. Target Role Requirements")
             role_choice = st.selectbox("Position Opening", list(SAMPLE_JDS.keys()), key="c_role")
             
             if role_choice == "Custom Job Description":
                 target_role = st.text_input("Role Title", placeholder="e.g., Senior Full Stack Engineer")
-                jd_input = st.text_area("Job Description Requirements", height=130, placeholder="Paste requirements...")
+                jd_input = st.text_area("Job Description Requirements", height=140, placeholder="Paste requirements...")
             else:
                 target_role = role_choice
                 default_jd = SAMPLE_JDS[role_choice]
-                jd_input = st.text_area("Job Description Requirements (Editable)", value=default_jd, height=130)
+                jd_input = st.text_area("Job Description Requirements (Editable)", value=default_jd, height=140)
 
         if single_file:
             resume_content = extract_text(single_file)
@@ -605,9 +615,9 @@ with tab1:
                 st.error("⚠️ No readable text found in the file.")
         else:
             st.markdown("""
-            <div style="background: #1E293B; border: 1px dashed #475569; border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px;">
+            <div style="background: #1E293B; border: 1px dashed #475569; border-radius: 12px; padding: 22px; text-align: center; margin-top: 15px;">
                 <div style="font-size: 15px; font-weight: 700; color: #38BDF8; margin-bottom: 6px;">⚡ Quick Start Guide</div>
-                <div style="font-size: 13px; color: #94A3B8;">1. Enter your Gemini API Key in the left sidebar.<br>2. Upload a Resume (PDF/DOCX) above and select a Target Role.<br>3. Click 'Run Comprehensive AI Evaluation' to launch your dedicated Intelligence Dossier.</div>
+                <div style="font-size: 13px; color: #CBD5E1;">1. Enter your Gemini API Key in the left sidebar.<br>2. Upload a Resume (PDF/DOCX) above and select a Target Role.<br>3. Click 'Run Comprehensive AI Evaluation' to launch your dedicated Intelligence Dossier.</div>
             </div>
             """, unsafe_allow_html=True)
 
