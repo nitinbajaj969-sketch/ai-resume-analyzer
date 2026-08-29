@@ -14,11 +14,153 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 
 st.set_page_config(
-    page_title="TalentIntel AI",
+    page_title="AI Resume Analyzer + ATS Intelligence",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# ==========================================
+# ROBUST SLATE-NAVY THEME (SELF-CONTAINED)
+# ==========================================
+st.markdown("""
+<style>
+    /* Global Base */
+    .stApp, header, [data-testid="stHeader"] {
+        background-color: #0F172A !important;
+        color: #F8FAFC !important;
+    }
+
+    /* Sidebar Base */
+    [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {
+        background-color: #1E293B !important;
+        border-right: 1px solid #334155 !important;
+    }
+    [data-testid="stSidebar"] * {
+        color: #F8FAFC !important;
+    }
+
+    /* All Text Inputs & Password Fields */
+    input[type="text"], input[type="password"], textarea {
+        background-color: #0F172A !important;
+        color: #FFFFFF !important;
+        border: 1px solid #38BDF8 !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Password Eye Button Container */
+    [data-baseweb="input"] {
+        background-color: #0F172A !important;
+        border: 1px solid #38BDF8 !important;
+        border-radius: 8px !important;
+    }
+    [data-baseweb="input"] button {
+        background-color: transparent !important;
+        color: #38BDF8 !important;
+    }
+
+    /* Selectbox Dropdown */
+    [data-baseweb="select"] > div {
+        background-color: #0F172A !important;
+        color: #FFFFFF !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+    }
+    [data-baseweb="popover"], [data-baseweb="menu"] {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+    }
+    [data-baseweb="menu"] li {
+        color: #F8FAFC !important;
+    }
+
+    /* File Uploader Dropzone & Button */
+    [data-testid="stFileUploader"] section {
+        background-color: #0F172A !important;
+        border: 1.5px dashed #38BDF8 !important;
+        border-radius: 10px !important;
+        padding: 16px !important;
+    }
+    [data-testid="stFileUploader"] section * {
+        color: #CBD5E1 !important;
+    }
+    [data-testid="stFileUploader"] button {
+        background: #2563EB !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        font-weight: 600 !important;
+    }
+
+    /* Top Title Card */
+    .hero-card {
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 22px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .hero-card h1 {
+        color: #38BDF8;
+        font-size: 30px;
+        font-weight: 800;
+        margin: 0 0 6px 0;
+    }
+    .hero-card p {
+        color: #94A3B8;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    /* Metric Badges Top Bar */
+    .metric-card {
+        background: #1E293B;
+        border: 1px solid #334155;
+        border-radius: 10px;
+        padding: 12px;
+        text-align: center;
+    }
+    .metric-val {
+        font-size: 22px;
+        font-weight: 800;
+        color: #38BDF8;
+    }
+    .metric-lbl {
+        font-size: 11px;
+        color: #94A3B8;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    /* Navigation Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background-color: #0F172A;
+        border: 1px solid #334155;
+        padding: 6px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: #1E293B !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+        padding: 8px 18px !important;
+        color: #CBD5E1 !important;
+        font-weight: 600 !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #2563EB !important;
+        color: #FFFFFF !important;
+        border-color: #38BDF8 !important;
+    }
+
+    /* Priority Badges */
+    .badge-tier1 { background: #059669; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; display: inline-block; }
+    .badge-tier2 { background: #D97706; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; display: inline-block; }
+    .badge-tier3 { background: #DC2626; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; display: inline-block; }
+</style>
+""", unsafe_allow_html=True)
 
 # Database Setup
 DB_FILE = "talent_intelligence.db"
@@ -123,7 +265,7 @@ def run_deep_ai_evaluation(api_key, resume_text, jd_text, role):
     client = genai.Client(api_key=api_key)
     prompt = f"""
 You are a Principal ATS Architect and Technical Hiring Director.
-Evaluate this resume against the target role and job description with enterprise standards.
+Evaluate this resume against the target role and job description with rigorous enterprise standards.
 
 Role: {role}
 Job Description:
@@ -158,7 +300,7 @@ Return ONLY valid JSON matching this schema:
     "High-impact bullet point 1 using Action Verb + Task + Quantifiable Result",
     "High-impact bullet point 2 addressing a missing skill"
   ],
-  "custom_cover_letter": "A compelling professional cover letter tailored for this job description."
+  "custom_cover_letter": "A compelling, 3-paragraph professional cover letter tailored for this exact job description highlighting the candidate's real matching strengths."
 }}
 """
     response = client.models.generate_content(
@@ -192,7 +334,7 @@ def render_radar_chart(scores_dict):
             angularaxis=dict(tickfont=dict(color="#F8FAFC", size=11), gridcolor="#334155")
         ),
         showlegend=False,
-        height=300,
+        height=290,
         margin=dict(l=35, r=35, t=30, b=30),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)'
@@ -207,7 +349,7 @@ def render_gauge_chart(score):
         title={'text': "ATS Overall Match (%)", 'font': {'color': '#94A3B8', 'size': 14}},
         gauge={
             'axis': {'range': [0, 100], 'tickcolor': "#64748B"},
-            'bar': {'color': "#38BDF8", 'thickness': 0.28},
+            'bar': {'color': "#2563EB", 'thickness': 0.28},
             'steps': [
                 {'range': [0, 45], 'color': "rgba(239, 68, 68, 0.25)"},
                 {'range': [45, 75], 'color': "rgba(245, 158, 11, 0.25)"},
@@ -229,7 +371,7 @@ def generate_dossier_pdf(candidate_name, role, result):
     bullet = ParagraphStyle('BulletStyle', parent=body, leftIndent=12, spaceAfter=2)
     
     story = []
-    story.append(Paragraph("TalentIntel AI — Candidate Dossier", title_style))
+    story.append(Paragraph("AI Resume Analysis & ATS Intelligence Report", title_style))
     story.append(Paragraph(f"<b>Candidate:</b> {candidate_name} &nbsp;|&nbsp; <b>Target Role:</b> {role} &nbsp;|&nbsp; <b>Date:</b> {datetime.now().strftime('%d %b %Y')}", body))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#CBD5E1"), spaceBefore=6, spaceAfter=10))
     
@@ -271,7 +413,7 @@ def generate_dossier_pdf(candidate_name, role, result):
     buffer.seek(0)
     return buffer
 
-# Session States
+# Session States for 2-Screen Switch
 if "evaluation_result" not in st.session_state:
     st.session_state.evaluation_result = None
 if "current_file_name" not in st.session_state:
@@ -280,29 +422,36 @@ if "current_role" not in st.session_state:
     st.session_state.current_role = None
 
 # Header Banner
-st.title("⚡ TalentIntel AI")
-st.caption("Enterprise ATS Intelligence, 5D Competency Vectors & Priority Talent Pipeline")
+st.markdown("""
+<div class="hero-card">
+    <h1>⚡ AI Resume Analyzer + ATS Intelligence</h1>
+    <p>Next-Gen Multi-Vector ATS Intelligence, Competency Radar & Career Upskilling Platform</p>
+</div>
+""", unsafe_allow_html=True)
 
-# Real-time Metrics
+# Top 4 Live Metrics
 eval_df_quick = fetch_evaluations_df()
 q_count = len(eval_df_quick)
 q_avg = f"{round(eval_df_quick['match_score'].mean(), 1)}%" if q_count > 0 else "0%"
 q_top = f"{eval_df_quick['match_score'].max()}%" if q_count > 0 else "0%"
 
 s1, s2, s3, s4 = st.columns(4)
-s1.metric("Total Evaluated", q_count)
-s2.metric("Avg ATS Match", q_avg)
-s3.metric("Top Candidate Score", q_top)
-s4.metric("Document Parsers", "PDF / DOCX")
+with s1:
+    st.markdown(f'<div class="metric-card"><div class="metric-val">{q_count}</div><div class="metric-lbl">Total Evaluated</div></div>', unsafe_allow_html=True)
+with s2:
+    st.markdown(f'<div class="metric-card"><div class="metric-val">{q_avg}</div><div class="metric-lbl">Avg ATS Match</div></div>', unsafe_allow_html=True)
+with s3:
+    st.markdown(f'<div class="metric-card"><div class="metric-val">{q_top}</div><div class="metric-lbl">Top ATS Score</div></div>', unsafe_allow_html=True)
+with s4:
+    st.markdown('<div class="metric-card"><div class="metric-val">PDF / DOCX</div><div class="metric-lbl">Parser Engine</div></div>', unsafe_allow_html=True)
 
-st.divider()
+st.write("")
 
 # Sidebar
 with st.sidebar:
-    st.subheader("⚙️ Engine Settings")
+    st.markdown("### ⚙️ Engine Settings")
     gemini_api_key = st.text_input("Gemini API Key", type="password", placeholder="Paste AIzaSy key...")
-    st.success("Active Engine: Gemini 3.6 Flash\nDatabase: SQLite3")
-    
+    st.caption("Engine: `Gemini 3.6 Flash` | DBMS: `SQLite3`")
     st.divider()
     st.markdown("### 🚀 Active Platform Modules")
     st.markdown("""
@@ -342,7 +491,14 @@ with tab1:
             st.plotly_chart(render_radar_chart(res.get("competency_scores", {})), use_container_width=True)
             
         tier = res.get('priority_tier', 'Tier-2 (Strong Potential)')
-        st.info(f"🏆 **Candidate Priority Tier:** {tier}\n\n**Executive Summary:** {res.get('priority_reason')}")
+        badge_class = "badge-tier1" if "Tier-1" in tier else ("badge-tier2" if "Tier-2" in tier else "badge-tier3")
+        
+        st.markdown(f"""
+        <div style="background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 16px; margin-bottom: 16px;">
+            <span class="{badge_class}">{tier}</span>
+            <div style="margin-top: 10px; font-size: 14px; color: #E2E8F0;"><b>Executive Summary:</b> {res.get('priority_reason')}</div>
+        </div>
+        """, unsafe_allow_html=True)
         
         sub1, sub2, sub3, sub4, sub5 = st.tabs([
             "📊 Skill Matrix", 
@@ -399,15 +555,15 @@ with tab1:
         col1, col2 = st.columns(2)
 
         with col1:
-            st.subheader("📄 1. Upload Resume Document")
+            st.markdown("### 📄 1. Upload Resume Document")
             single_file = st.file_uploader(
-                "Upload Resume (PDF / DOCX)",
+                "Upload Candidate Document (PDF / DOCX)",
                 type=["pdf", "docx"],
                 key="c_upload"
             )
 
         with col2:
-            st.subheader("🎯 2. Target Role Requirements")
+            st.markdown("### 🎯 2. Target Role Requirements")
             role_choice = st.selectbox("Position Opening", list(SAMPLE_JDS.keys()), key="c_role")
             
             if role_choice == "Custom Job Description":
@@ -445,7 +601,12 @@ with tab1:
             else:
                 st.error("⚠️ No readable text found in the file.")
         else:
-            st.info("⚡ **Quick Start:** 1. Enter Gemini API Key in sidebar ➔ 2. Upload Resume & choose Job Role ➔ 3. Click 'Run Evaluation'.")
+            st.markdown("""
+            <div style="background: #1E293B; border: 1px dashed #475569; border-radius: 12px; padding: 22px; text-align: center; margin-top: 15px;">
+                <div style="font-size: 15px; font-weight: 700; color: #38BDF8; margin-bottom: 6px;">⚡ Quick Start Guide</div>
+                <div style="font-size: 13px; color: #CBD5E1;">1. Enter your Gemini API Key in the left sidebar.<br>2. Upload a Resume (PDF/DOCX) above and select a Target Role.<br>3. Click 'Run Comprehensive AI Evaluation' to launch your dedicated Intelligence Dossier.</div>
+            </div>
+            """, unsafe_allow_html=True)
 
 # --- TAB 2: RECRUITER MODE ---
 with tab2:
@@ -520,7 +681,6 @@ with tab3:
                 st.success("Status Updated in SQLite Database!")
                 st.rerun()
                 
-        # Export
         csv_dump = eval_records.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Export Complete Database (CSV)", csv_dump, "All_Evaluations_Database_Dump.csv", "text/csv")
     else:
