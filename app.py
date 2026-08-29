@@ -656,4 +656,29 @@ with tab3:
         m1, m2, m3, m4 = st.columns(4)
         m1.metric("Evaluations Count", len(eval_records))
         m2.metric("Average Score", f"{round(eval_records['match_score'].mean(), 1)}%")
-        m3.metric("Top Score", f"{eval_records['match_score'].max()
+        m3.metric("Top Score", f"{eval_records['match_score'].max()}%")
+        tier1_count = len(eval_records[eval_records['priority_tier'].str.contains('Tier-1', na=False)])
+        m4.metric("Tier-1 Shortlisted", tier1_count)
+        
+        st.dataframe(eval_records, use_container_width=True)
+        
+        st.divider()
+        st.subheader("⚙️ Update Candidate Recruitment Status")
+        st_c1, st_c2, st_c3 = st.columns([1, 1, 1])
+        with st_c1:
+            selected_eval_id = st.selectbox("Select Evaluation ID", eval_records["eval_id"].tolist())
+        with st_c2:
+            new_status_val = st.selectbox("Set Status", ["Under Review", "Shortlisted for Interview", "Technical Assessment Sent", "Rejected"])
+        with st_c3:
+            st.write("")
+            st.write("")
+            if st.button("Update Status in DB"):
+                update_candidate_status(selected_eval_id, new_status_val)
+                st.success("Status Updated in SQLite Database!")
+                st.rerun()
+                
+        # Export
+        csv_dump = eval_records.to_csv(index=False).encode('utf-8')
+        st.download_button("📥 Export Complete Database (CSV)", csv_dump, "All_Evaluations_Database_Dump.csv", "text/csv")
+    else:
+        st.info("No database records found. Execute evaluations to generate live logs.")
